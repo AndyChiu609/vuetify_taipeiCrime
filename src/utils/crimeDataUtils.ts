@@ -248,6 +248,16 @@ export function useCrimeDataUtils() {
     selectedCrimeTypes: string[],
     dateRange: DateRange
   ): StatsData {
+    // 添加更多檢查以確保安全
+    if (!geoData || !processedData || selectedAreas.length === 0) {
+      return {
+        filteredCount: 0,
+        averagePerMonth: '0',
+        mostFrequentArea: null,
+        mostFrequentCrimeType: null
+      };
+    }
+    
     // 計算過濾後的總數
     const filteredCount = getFilteredCount(
       geoData, 
@@ -383,7 +393,7 @@ export function useCrimeDataUtils() {
     };
   }
 
-  // 防抖函數
+  // 防抖函數 - 保留但不再需要直接在組件中使用
   function createDebounce() {
     let timeout: number | null = null;
     
